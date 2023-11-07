@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-// require_once '../config.php';
-
 use App\Models\UserModel;
 
 class UserController
