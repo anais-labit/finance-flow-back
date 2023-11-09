@@ -1,6 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require_once './vendor/autoload.php';
+// session_start();
 
 use App\Controllers\UserController;
 

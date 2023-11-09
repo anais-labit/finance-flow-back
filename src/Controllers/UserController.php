@@ -107,7 +107,7 @@ class UserController
             //     ]);
             //     return;
             // } else
-            if ($this->loginExists($login) && password_verify($password, $hashedPassword)) {
+             if ($this->loginExists($login) && password_verify($password, $hashedPassword)) {
                 $_SESSION['login'] = $_POST['login'];
                 echo json_encode([
                     "success" => true,
