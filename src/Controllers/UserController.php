@@ -83,35 +83,37 @@ class UserController
 
         $userInfos = $userValidation->getOneUserInfos($login);
 
-        $user = $userValidation;
-        $firstname = $userValidation->getOneUserInfos($login)['firstname'];
-        $lastname = $userValidation->getOneUserInfos($login)['lastname'];
-        $hashedPassword = $userValidation->getOneUserInfos($login)['password'];
-        $role = $userValidation->getOneUserInfos($login)['role'];
+        if ($userInfos) {
+            $user = $userValidation;
+            $firstname = $userValidation->getOneUserInfos($login)['firstname'];
+            $lastname = $userValidation->getOneUserInfos($login)['lastname'];
+            $hashedPassword = $userValidation->getOneUserInfos($login)['password'];
+            $role = $userValidation->getOneUserInfos($login)['role'];
 
-        $user->setLogin($login)
-            ->setFirstname($firstname)
-            ->setLastname($lastname)
-            ->setPassword($hashedPassword)
-            ->setRole($role);
+            $user->setLogin($login)
+                ->setFirstname($firstname)
+                ->setLastname($lastname)
+                ->setPassword($hashedPassword)
+                ->setRole($role);
 
-        $this->user = $user;
-        $this->setSession();
+            $this->user = $user;
+            $this->setSession();
 
-        $hashedPassword = $userInfos['password'];
-
-        if (empty($login) || empty($password)) {
-            echo json_encode([
-                "success" => false,
-                "message" => "Renseignez votre mot de passe."
-            ]);
-            return;
-        } else if ($this->loginExists($login) && password_verify($password, $hashedPassword)) {
-            $_SESSION['login'] = $_POST['login'];
-            echo json_encode([
-                "success" => true,
-                "message" => "Connexion réussie. Vous allez être redirigé(e)."
-            ]);
+            $hashedPassword = $userInfos['password'];
+            // if (empty($login) || empty($password)) {
+            //     echo json_encode([
+            //         "success" => false,
+            //         "message" => "Renseignez votre mot de passe."
+            //     ]);
+            //     return;
+            // } else
+            if ($this->loginExists($login) && password_verify($password, $hashedPassword)) {
+                $_SESSION['login'] = $_POST['login'];
+                echo json_encode([
+                    "success" => true,
+                    "message" => "Connexion réussie. Vous allez être redirigé(e)."
+                ]);
+            }
         } else {
             echo json_encode([
                 "success" => false,
