@@ -1,9 +1,9 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 require_once './vendor/autoload.php';
-// session_start();
 
 use App\Controllers\UserController;
+use App\Controllers\TransactionController;
 
 if (isset($_POST['submitRegisterForm'])) {
     $registration = new UserController;
@@ -11,9 +11,35 @@ if (isset($_POST['submitRegisterForm'])) {
     die();
 }
 
-if (isset($_POST['submitLoginForm']) && (!empty($_POST['password']))) {
+if (isset($_POST['submitLoginForm'])) {
     $connexion = new UserController();
     $connexion->logIn($_POST['login'], $_POST['password']);
     die();
 }
 
+if (isset($_GET['getSubcategories'])) {
+    $transactionController = new TransactionController();
+    $transactionController->getSubcategories();
+    die();
+}
+
+if (isset($_POST['submitAddTransactionForm'])) {
+    $transactionController = new TransactionController();
+    $transactionName = $_POST['newTransaction'];
+    $transactionController->addNewTransaction($transactionName, $userId);
+    die();
+}
+
+
+// if (isset($_GET['getUserTransactions'])) {
+//     $transactions = $transactionsController->displayUserTransactions($_SESSION['user']->getId());
+//     return $transactions;
+// }
+
+
+
+
+// if (isset($_POST['addTaskBtn'])) {
+//     $taskController->addNewTask(($_POST['newTaskName']), $_POST['dueDateNewTask'], $_POST['postId']);
+//     die();
+// }
