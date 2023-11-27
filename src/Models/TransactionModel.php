@@ -42,7 +42,7 @@ class TransactionModel
 
         return $subcategories;
     }
-    
+
     // public function getUserTransactions($idUser)
     // {
     //     $query = 'SELECT transaction.id, transaction.name
@@ -60,12 +60,21 @@ class TransactionModel
     //     return $transactions;
     // }
 
-    public function addTransaction(string $name, int $idUser): void
-    {
-        $query = $this->connectDb()->prepare('INSERT INTO transaction (name, user_id) VALUES (:name, :user_id)');
+    public function addTransaction(
+        int $idUser,
+        int $idSubCategory,
+        DateTime $date,
+        string $name, 
+        int $amount
+    ): void {
+        $query = $this->connectDb()->prepare('INSERT INTO transaction (user_id, subcategory_id, date, name, amount) VALUES (:user_id, :subcategory_id, :date, :name, :amount)');
         $name = ucwords($name);
-        $query->bindValue(':name', $name);
+        $formatedDate = $date->format('Y-m-d H:i:s');
         $query->bindValue(':user_id', $idUser);
+        $query->bindValue(':subcategory_id', $idSubCategory);
+        $query->bindValue(':date', $formatedDate);
+        $query->bindValue(':name', $name);
+        $query->bindValue(':amount', $amount);
         $query->execute();
     }
 }

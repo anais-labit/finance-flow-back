@@ -80,10 +80,7 @@ class UserController
     function logIn(string $login, string $password): void
     {
         $userValidation = new UserModel();
-
         $userInfos = $userValidation->getOneUserInfos($login);
-
-        // var_dump($userInfos);
 
         if ($userInfos) {
             $user = $userValidation;

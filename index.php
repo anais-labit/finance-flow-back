@@ -25,8 +25,19 @@ if (isset($_GET['getSubcategories'])) {
 
 if (isset($_POST['submitAddTransactionForm'])) {
     $transactionController = new TransactionController();
-    $transactionName = $_POST['newTransaction'];
-    $transactionController->addNewTransaction($transactionName, $userId);
+    $userId = $_POST['user_id'];
+    $idSubCategory = $_POST['subcategory_id'];
+    $stringDate = $_POST['date'];
+    $date = new DateTime($stringDate);
+    $transactionName = $_POST['title'];
+    $amount = $_POST['amount'];
+    $transactionController->addNewTransaction(
+        $userId,
+        $idSubCategory,
+        $date,
+        $transactionName, 
+        $amount
+    );
     die();
 }
 
