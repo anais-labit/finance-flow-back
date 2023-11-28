@@ -122,18 +122,6 @@ class UserController
         }
     }
 
-    function setSession(): void
-    {
-        $_SESSION['user'] = $this->user;
-    }
-
-    function logOut(): void
-    {
-        unset($_SESSION);
-        session_destroy();
-        header('Location:index.php');
-    }
-
     function updateFields(string $login, array $values)
     {
 

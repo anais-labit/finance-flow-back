@@ -17,3 +17,8 @@ if (isset($_POST['submitLoginForm']) && (!empty($_POST['password']))) {
     die();
 }
 
+if (isset($_POST['action']) && $_POST['action'] == 'logout') {
+    $userController = new UserController();
+    $userController->logOut();
+    die();
+}
