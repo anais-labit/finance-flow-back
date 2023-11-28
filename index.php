@@ -35,22 +35,18 @@ if (isset($_POST['submitAddTransactionForm'])) {
         $userId,
         $idSubCategory,
         $date,
-        $transactionName, 
+        $transactionName,
         $amount
     );
     die();
 }
 
-
-// if (isset($_GET['getUserTransactions'])) {
-//     $transactions = $transactionsController->displayUserTransactions($_SESSION['user']->getId());
-//     return $transactions;
-// }
-
-
-
-
-// if (isset($_POST['addTaskBtn'])) {
-//     $taskController->addNewTask(($_POST['newTaskName']), $_POST['dueDateNewTask'], $_POST['postId']);
-//     die();
-// }
+if (isset($_GET['getUserTransactions'])) {
+    // var_dump($userId);
+    $userId = isset($_GET['userId']) ? $_GET['userId'] : null;
+    // var_dump($userId);
+    $transactionController = new TransactionController();
+    $transactions = $transactionController->displayUserTransactions($userId);
+    //  json_encode($transactions);
+    die();
+}

@@ -43,22 +43,27 @@ class TransactionModel
         return $subcategories;
     }
 
-    // public function getUserTransactions($idUser)
-    // {
-    //     $query = 'SELECT transaction.id, transaction.name
-    //           FROM transaction
-    //           INNER JOIN user ON transaction.user_id = user.id
-    //           WHERE user.id = :user_id
-    //           ORDER BY transaction.id DESC';
+    public function getUserTransactions($idUser)
+    {
+        $query = 'SELECT 
+                  transaction.id,
+                  transaction.name,
+                  transaction.amount,
+                  transaction.subcategory_id,
+                  transaction.date
+              FROM transaction
+              INNER JOIN user ON transaction.user_id = user.id
+              WHERE user.id = :user_id
+              ORDER BY transaction.id DESC';
 
-    //     $check = $this->connectDb()->prepare($query);
-    //     $check->bindValue(':user_id', $idUser, PDO::PARAM_INT);
-    //     $check->execute();
+        $check = $this->connectDb()->prepare($query);
+        $check->bindValue(':user_id', $idUser);
+        $check->execute();
 
-    //     $transactions = $check->fetchAll(PDO::FETCH_ASSOC);
+        $transactions = $check->fetchAll(PDO::FETCH_ASSOC);
 
-    //     return $transactions;
-    // }
+        return $transactions;
+    }
 
     public function addTransaction(
         int $idUser,

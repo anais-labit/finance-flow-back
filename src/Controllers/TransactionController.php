@@ -16,6 +16,13 @@ class TransactionController
         echo $subcategoriess;
     }
 
+    function displayUserTransactions(int $idUser)
+    {
+        $transactionModel = new TransactionModel();
+        $result = $transactionModel->getUserTransactions($idUser);        
+        echo json_encode($result);
+    }
+
     public function addNewTransaction(
         int $idUser,
         int $idSubCategory,
@@ -63,12 +70,6 @@ class TransactionController
     }
 
 
-    // function displayUserTransactions(int $idUser)
-    // {
-    //     $transactionModel = new TransactionModel();
-    //     $result = $transactionModel->getUserTransactions($idUser);
-    //     echo json_encode($result);
-    // }
 
 
     // function deleteList(string $idList, int $idUser): void
