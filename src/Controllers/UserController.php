@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\TransactionModel;
 use App\Models\UserModel;
+use DateTime;
 
 class UserController
 {
@@ -50,14 +52,14 @@ class UserController
             if (($password === $confPassword) && ($this->passwordValidation($password))) {
                 $newUser = new UserModel();
 
-                $_SESSION['welcomeLogin'] = $_POST['login'];
-
                 $newUser->register($login, $firstname, $lastname, $hashedPassword);
 
                 echo json_encode([
                     "success" => true,
                     "message" => "Inscription réussie. Vous allez être redirigé(e)."
                 ]);
+
+
             } else if (!$this->passwordValidation($password)) {
                 echo json_encode([
                     "success" => false,
@@ -76,6 +78,7 @@ class UserController
             ]);
         }
     }
+
 
     function logIn(string $login, string $password): void
     {
@@ -106,7 +109,6 @@ class UserController
                 ]);
                 return;
             } else if ($this->loginExists($login) && password_verify($password, $hashedPassword)) {
-                $_SESSION['login'] = $_POST['login'];
                 echo json_encode([
                     "success" => true,
                     "id" => $id,

@@ -95,21 +95,31 @@ class UserModel
         return $this->role;
     }
 
-
     public function register(
         string $login,
         string $firstname,
         string $lastname,
         string $password,
     ): void {
+        $database = $this->connectDb();
+
         $request = "INSERT INTO user (login, firstname, lastname, password, role) VALUES (:login, :firstname, :lastname, :password, :role)";
-        $newUser = $this->connectDb()->prepare($request);
+        $newUser = $database->prepare($request);
         $newUser->bindValue(':login', $login);
         $newUser->bindValue(':firstname', $firstname);
         $newUser->bindValue(':lastname', $lastname);
         $newUser->bindValue(':password', $password);
         $newUser->bindValue(':role', 2);
         $newUser->execute();
+        
+        $query = $this->connectDb()->prepare('INSERT INTO transaction (user_id, subcategory_id, name, amount) VALUES (:user_id, :subcategory_id, :name, :amount)');
+        $lastInsertId = $database->lastInsertId();
+        $name = 'monthly_budget';
+        $query->bindValue(':user_id', $lastInsertId); 
+        $query->bindValue(':subcategory_id', 16);
+        $query->bindValue(':name', $name);
+        $query->bindValue(':amount', 1800);
+        $query->execute();
     }
 
     public function checkIfLoginExists(string $login): void

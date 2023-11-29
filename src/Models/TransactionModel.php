@@ -7,7 +7,6 @@ use DateTime;
 
 class TransactionModel
 {
-
     private ?int $id;
     private ?int $userId;
     private ?int $subCategoryId;
@@ -30,6 +29,66 @@ class TransactionModel
         $conn = new DatabaseModel;
         return $conn->connect();
     }
+
+    // public function getId(): ?int
+    // {
+    //     return $this->id;
+    // }
+
+    // public function getUserId(): ?int
+    // {
+    //     return $this->userId;
+    // }
+
+    // public function setUserId(int $userId): self
+    // {
+    //     $this->userId = $userId;
+    //     return $this;
+    // }
+
+    // public function getSubCategoryId(): ?int
+    // {
+    //     return $this->subCategoryId;
+    // }
+
+    // public function setSubCategoryId(int $subCategoryId): self
+    // {
+    //     $this->subCategoryId = $subCategoryId;
+    //     return $this;
+    // }
+
+    // public function getDate(): ?DateTime
+    // {
+    //     return $this->date;
+    // }
+
+    // public function setDate(DateTime $date): self
+    // {
+    //     $this->date = $date;
+    //     return $this;
+    // }
+
+    // public function getTitle(): ?string
+    // {
+    //     return $this->title;
+    // }
+
+    // public function setTitle(string $title): self
+    // {
+    //     $this->title = ucwords($title);
+    //     return $this;
+    // }
+
+    // public function getAmount(): ?int
+    // {
+    //     return $this->amount;
+    // }
+
+    // public function setAmount(int $amount): self
+    // {
+    //     $this->amount = $amount;
+    //     return $this;
+    // }
 
     public function getSubcategories()
     {
@@ -84,4 +143,6 @@ class TransactionModel
         $query->bindValue(':amount', $amount);
         $query->execute();
     }
+
+    
 }
