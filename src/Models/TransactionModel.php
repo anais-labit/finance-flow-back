@@ -46,15 +46,17 @@ class TransactionModel
     public function getUserTransactions($idUser)
     {
         $query = 'SELECT 
-                  transaction.id,
-                  transaction.name,
-                  transaction.amount,
-                  transaction.subcategory_id,
-                  transaction.date
-              FROM transaction
-              INNER JOIN user ON transaction.user_id = user.id
-              WHERE user.id = :user_id
-              ORDER BY transaction.id DESC';
+              transaction.id,
+              transaction.name,
+              transaction.amount,
+              transaction.subcategory_id,
+              subcategory.name AS subcategory_name, 
+              transaction.date
+          FROM transaction
+          INNER JOIN user ON transaction.user_id = user.id
+          INNER JOIN subcategory ON transaction.subcategory_id = subcategory.id  
+          WHERE user.id = :user_id
+          ORDER BY transaction.id DESC';
 
         $check = $this->connectDb()->prepare($query);
         $check->bindValue(':user_id', $idUser);
@@ -69,7 +71,7 @@ class TransactionModel
         int $idUser,
         int $idSubCategory,
         DateTime $date,
-        string $name, 
+        string $name,
         int $amount
     ): void {
         $query = $this->connectDb()->prepare('INSERT INTO transaction (user_id, subcategory_id, date, name, amount) VALUES (:user_id, :subcategory_id, :date, :name, :amount)');

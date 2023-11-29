@@ -1,2 +1,6 @@
 /vendor/
+<<<<<<< HEAD
 /src/Models/DatabaseModel.php
+=======
+/src/Models/DatabaseModel.php
+>>>>>>> 6d4dc218680f3032262181585a70ca590d63cbc2
