@@ -6,8 +6,8 @@ class DatabaseModel
 {
     private $host = 'localhost';
     private $dbname = 'finance-flow';
-    private $username = 'anais';
-    private $password = (PHP_OS == 'Linux') ? '' : 'root';
+    private $username = 'root';
+    private $password = 'Romain-1964';
     private $conn;
 
     public function connect()
