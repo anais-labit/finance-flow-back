@@ -17,7 +17,7 @@ class BalanceController
     function displayUserBalance(int $idUser)
     {
         $transactionModel = new BalanceModel();
-        $result = $transactionModel->getCurrentBalanceTransaction($idUser);
+        $result = $transactionModel->getInitialBalance($idUser);
         echo json_encode($result);
     }
    

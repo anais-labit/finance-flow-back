@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\TransactionModel;
+use App\Models\BalanceModel;
 use DateTime;
 
 class TransactionController
@@ -19,10 +20,10 @@ class TransactionController
     function displayUserTransactions(int $idUser)
     {
         $transactionModel = new TransactionModel();
-        $result = $transactionModel->getUserTransactions($idUser);        
+        $result = $transactionModel->getUserTransactions($idUser);
         echo json_encode($result);
     }
-
+   
     public function addNewTransaction(
         int $idUser,
         int $idSubCategory,
@@ -39,22 +40,24 @@ class TransactionController
                 "success" => false,
                 "message" => "La transaction doit porter un nom."
             ]);
-        // } elseif (empty($date) || ($date != '')) {
-        //     echo json_encode([
-        //         "success" => false,
-        //         "message" => "Merci de saisir la date de la transaction."
-        //     ]);
-        // } elseif (empty($amount)) {
-        //     echo json_encode([
-        //         "success" => false,
-        //         "message" => "Merci de saisir un montant."
-        //     ]);
-        // } elseif (empty($idSubCategory) || ($idSubCategory != '')) {
-        //     echo json_encode([
-        //         "success" => false,
-        //         "message" => "Merci de choisir une catégorie."
-        //     ]);
         } else {
+            $categoryId = $transactionModel->getCategoryIdForSubcategory($idSubCategory);
+
+            $balanceModel = new BalanceModel();
+            $currentBalance = $balanceModel->getInitialBalance($idUser);
+
+            if (is_array($currentBalance)) {
+                $currentBalance = $currentBalance['initial_balance'];
+            }
+
+            if ($categoryId == 1) {
+                $newBalance = $currentBalance - $amount;
+            } else {
+                $newBalance = $currentBalance + $amount;
+            }
+
+            $balanceModel->updateBalance($idUser, $newBalance);
+
             $transactionModel->addTransaction(
                 $idUser,
                 $idSubCategory,
@@ -62,21 +65,11 @@ class TransactionController
                 $newTransactionName,
                 $amount
             );
+
             echo json_encode([
                 "success" => true,
                 "message" => "Transaction ajoutée !"
             ]);
         }
     }
-
-
-
-
-    // function deleteList(string $idList, int $idUser): void
-    // {
-    //     $delete = new ListModel();
-    //     $delete->deleteLists($idList, $idUser);
-
-    //     echo json_encode(['message' => 'Liste et tâches supprimées !']);
-    // }
 }

@@ -37,7 +37,7 @@ class BalanceModel
         $query->execute();
     }
     
-    public function getCurrentBalanceTransaction($idUser)
+    public function getInitialBalance($idUser)
     {
         $query = 'SELECT initial_balance FROM balance
           INNER JOIN user ON balance.user_id = user.id
@@ -51,5 +51,14 @@ class BalanceModel
 
         return $balance;
     }
+    
+    public function updateBalance($idUser, $newBalance)
+    {
+        $query = $this->connectDb()->prepare('UPDATE balance SET initial_balance = :initial_balance WHERE user_id = :user_id');
+        $query->bindValue(':user_id', $idUser);
+        $query->bindValue(':initial_balance', $newBalance);
+        $query->execute();
+    }
+
 
 }
