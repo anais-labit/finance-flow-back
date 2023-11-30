@@ -126,6 +126,7 @@ class TransactionModel
         return $transactions;
     }
 
+
     public function addTransaction(
         int $idUser,
         int $idSubCategory,
@@ -143,6 +144,4 @@ class TransactionModel
         $query->bindValue(':amount', $amount);
         $query->execute();
     }
-
-    
 }

@@ -111,15 +111,12 @@ class UserModel
         $newUser->bindValue(':password', $password);
         $newUser->bindValue(':role', 2);
         $newUser->execute();
-        
-        $query = $this->connectDb()->prepare('INSERT INTO transaction (user_id, subcategory_id, name, amount) VALUES (:user_id, :subcategory_id, :name, :amount)');
-        $lastInsertId = $database->lastInsertId();
-        $name = 'monthly_budget';
-        $query->bindValue(':user_id', $lastInsertId); 
-        $query->bindValue(':subcategory_id', 16);
-        $query->bindValue(':name', $name);
-        $query->bindValue(':amount', 1800);
-        $query->execute();
+
+        // $query = $this->connectDb()->prepare('INSERT INTO balance (user_id, initial_balance) VALUES (:user_id, :initial_balance)');
+        // $lastInsertId = $database->lastInsertId();
+        // $query->bindValue(':user_id', $lastInsertId);
+        // $query->bindValue(':initial_balance', 1800);
+        // $query->execute();
     }
 
     public function checkIfLoginExists(string $login): void
@@ -143,41 +140,41 @@ class UserModel
     }
 
 
-    public function getAllUsers(): array
-    {
-        $getUsers = $this->connectDb()->prepare("SELECT * from user ");
-        $getUsers->execute();
-        $userInfos = $getUsers->fetchAll(\PDO::FETCH_ASSOC);
+    // public function getAllUsers(): array
+    // {
+    //     $getUsers = $this->connectDb()->prepare("SELECT * from user ");
+    //     $getUsers->execute();
+    //     $userInfos = $getUsers->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (empty($userInfos)) {
-            return null;
-        } else return $userInfos;
-    }
+    //     if (empty($userInfos)) {
+    //         return null;
+    //     } else return $userInfos;
+    // }
 
-    public function updateOne(array $params): void
-    {
-        $fieldsToUpdate = $params;
-        array_pop($fieldsToUpdate);
+    // public function updateOne(array $params): void
+    // {
+    //     $fieldsToUpdate = $params;
+    //     array_pop($fieldsToUpdate);
 
-        $requestString = [];
+    //     $requestString = [];
 
-        foreach ($fieldsToUpdate as $key => $value) {
-            $fieldName = str_replace(':', '', $key);
-            $requestString[] = $fieldName . ' = ' . $key;
-        }
+    //     foreach ($fieldsToUpdate as $key => $value) {
+    //         $fieldName = str_replace(':', '', $key);
+    //         $requestString[] = $fieldName . ' = ' . $key;
+    //     }
 
-        $requestString = implode(', ', $requestString);
+    //     $requestString = implode(', ', $requestString);
 
-        $requestUpdateOne = "UPDATE user SET $requestString WHERE login = :login";
-        $queryUpdateOne = $this->connectDb()->prepare($requestUpdateOne);
-        // var_dump($queryUpdateOne);
-        $queryUpdateOne->execute($params);
-    }
+    //     $requestUpdateOne = "UPDATE user SET $requestString WHERE login = :login";
+    //     $queryUpdateOne = $this->connectDb()->prepare($requestUpdateOne);
+    //     // var_dump($queryUpdateOne);
+    //     $queryUpdateOne->execute($params);
+    // }
 
-    public function deleteUser(string $login): void
-    {
-        $deleteUser = $this->connectDb()->prepare("DELETE FROM user WHERE login = :login");
-        $deleteUser->bindValue(':login', $login);
-        $deleteUser->execute();
-    }
+    // public function deleteUser(string $login): void
+    // {
+    //     $deleteUser = $this->connectDb()->prepare("DELETE FROM user WHERE login = :login");
+    //     $deleteUser->bindValue(':login', $login);
+    //     $deleteUser->execute();
+    // }
 }

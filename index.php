@@ -4,6 +4,8 @@ require_once './vendor/autoload.php';
 
 use App\Controllers\UserController;
 use App\Controllers\TransactionController;
+use App\Controllers\BalanceController;
+
 
 if (isset($_POST['submitRegisterForm'])) {
     $registration = new UserController;
@@ -14,6 +16,14 @@ if (isset($_POST['submitRegisterForm'])) {
 if (isset($_POST['submitLoginForm'])) {
     $connexion = new UserController();
     $connexion->logIn($_POST['login'], $_POST['password']);
+    die();
+}
+
+if (isset($_POST['submitBalanceForm'])) {
+    $userId = $_POST['user_id'];
+    $initialBalance = $_POST['intial_amount'];
+    $balance = new BalanceController();
+    $balance->intitiateBudget($userId, $initialBalance);
     die();
 }
 
@@ -42,11 +52,15 @@ if (isset($_POST['submitAddTransactionForm'])) {
 }
 
 if (isset($_GET['getUserTransactions'])) {
-    // var_dump($userId);
     $userId = isset($_GET['userId']) ? $_GET['userId'] : null;
-    // var_dump($userId);
     $transactionController = new TransactionController();
     $transactions = $transactionController->displayUserTransactions($userId);
-    //  json_encode($transactions);
+    die();
+}
+
+if (isset($_GET['getUserBalance'])) {
+    $userId = isset($_GET['userId']) ? $_GET['userId'] : null;
+    $balanceController = new BalanceController();
+    $balance = $balanceController->displayUserBalance($userId);
     die();
 }
