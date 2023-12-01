@@ -44,10 +44,10 @@ class TransactionController
             $categoryId = $transactionModel->getCategoryIdForSubcategory($idSubCategory);
 
             $balanceModel = new BalanceModel();
-            $currentBalance = $balanceModel->getInitialBalance($idUser);
+            $currentBalance = $balanceModel->getUserBalance($idUser);
 
             if (is_array($currentBalance)) {
-                $currentBalance = $currentBalance['initial_balance'];
+                $currentBalance = $currentBalance['balance'];
             }
 
             if ($categoryId == 1) {

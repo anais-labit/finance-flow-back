@@ -111,12 +111,6 @@ class UserModel
         $newUser->bindValue(':password', $password);
         $newUser->bindValue(':role', 2);
         $newUser->execute();
-
-        // $query = $this->connectDb()->prepare('INSERT INTO balance (user_id, initial_balance) VALUES (:user_id, :initial_balance)');
-        // $lastInsertId = $database->lastInsertId();
-        // $query->bindValue(':user_id', $lastInsertId);
-        // $query->bindValue(':initial_balance', 1800);
-        // $query->execute();
     }
 
     public function checkIfLoginExists(string $login): void

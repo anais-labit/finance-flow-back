@@ -21,9 +21,9 @@ if (isset($_POST['submitLoginForm'])) {
 
 if (isset($_POST['submitBalanceForm'])) {
     $userId = $_POST['user_id'];
-    $initialBalance = $_POST['initial_amount'];
+    $budget = $_POST['amount'];
     $balance = new BalanceController();
-    $balance->intitiateBudget($userId, $initialBalance);
+    $balance->intitiateBudget($userId, $budget);
     die();
 }
 

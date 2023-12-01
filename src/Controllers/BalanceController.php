@@ -7,17 +7,17 @@ use App\Models\BalanceModel;
 class BalanceController
 {
 
-    function intitiateBudget(int $idUser, int $initialBalance) {
+    function intitiateBudget(int $idUser, int $budget) {
         $balanceModel = new BalanceModel();
-        $initialBudget = $balanceModel->setBalance($idUser, $initialBalance);
-        echo json_encode($initialBudget);
+        $balance = $balanceModel->setBalance($idUser, $budget);
+        echo json_encode($balance);
       
     }
 
     function displayUserBalance(int $idUser)
     {
         $transactionModel = new BalanceModel();
-        $result = $transactionModel->getInitialBalance($idUser);
+        $result = $transactionModel->getUserBalance($idUser);
         echo json_encode($result);
     }
    

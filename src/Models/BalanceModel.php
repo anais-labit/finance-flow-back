@@ -30,16 +30,16 @@ class BalanceModel
         return $conn->connect();
     }
 
-    public function setBalance(int $idUser, int $initialBalance): void {
-        $query = $this->connectDb()->prepare('INSERT INTO balance (user_id, initial_balance) VALUES (:user_id, :initial_balance)');
+    public function setBalance(int $idUser, int $balance): void {
+        $query = $this->connectDb()->prepare('INSERT INTO balance (user_id, balance) VALUES (:user_id, :balance)');
         $query->bindValue(':user_id', $idUser);
-        $query->bindValue(':initial_balance', $initialBalance);
+        $query->bindValue(':balance', $balance);
         $query->execute();
     }
     
-    public function getInitialBalance($idUser)
+    public function getUserbalance($idUser)
     {
-        $query = 'SELECT initial_balance FROM balance
+        $query = 'SELECT balance FROM balance
           INNER JOIN user ON balance.user_id = user.id
           WHERE user.id = :user_id';
 
@@ -54,9 +54,9 @@ class BalanceModel
     
     public function updateBalance($idUser, $newBalance)
     {
-        $query = $this->connectDb()->prepare('UPDATE balance SET initial_balance = :initial_balance WHERE user_id = :user_id');
+        $query = $this->connectDb()->prepare('UPDATE balance SET balance = :balance WHERE user_id = :user_id');
         $query->bindValue(':user_id', $idUser);
-        $query->bindValue(':initial_balance', $newBalance);
+        $query->bindValue(':balance', $newBalance);
         $query->execute();
     }
 
