@@ -23,7 +23,7 @@ class TransactionController
         $result = $transactionModel->getUserTransactions($idUser);
         echo json_encode($result);
     }
-   
+
     public function addNewTransaction(
         int $idUser,
         int $idSubCategory,
@@ -39,6 +39,11 @@ class TransactionController
             echo json_encode([
                 "success" => false,
                 "message" => "La transaction doit porter un nom."
+            ]);
+        } elseif ($amount == 0) {
+            echo json_encode([
+                "success" => false,
+                "message" => "La transaction ne peut pas être égale à 0€"
             ]);
         } else {
             $categoryId = $transactionModel->getCategoryIdForSubcategory($idSubCategory);

@@ -54,7 +54,7 @@ if (isset($_POST['submitAddTransactionForm'])) {
 if (isset($_GET['getUserTransactions'])) {
     $userId = isset($_GET['userId']) ? $_GET['userId'] : null;
     $transactionController = new TransactionController();
-    $transactions = $transactionController->displayUserTransactions($userId);
+    $transactions = $transactionController->displayUserTransactions($userId);    
     die();
 }
 
