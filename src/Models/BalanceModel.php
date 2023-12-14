@@ -13,13 +13,14 @@ class BalanceModel
         return $conn->connect();
     }
 
-    public function setBalance(int $idUser, int $balance): void {
+    public function setBalance(int $idUser, int $balance): void
+    {
         $query = $this->connectDb()->prepare('INSERT INTO balance (user_id, balance) VALUES (:user_id, :balance)');
         $query->bindValue(':user_id', $idUser);
         $query->bindValue(':balance', $balance);
         $query->execute();
     }
-    
+
     public function getUserbalance($idUser)
     {
         $query = 'SELECT balance FROM balance
@@ -34,7 +35,7 @@ class BalanceModel
 
         return $balance;
     }
-    
+
     public function updateBalance($idUser, $newBalance)
     {
         $query = $this->connectDb()->prepare('UPDATE balance SET balance = :balance WHERE user_id = :user_id');
@@ -43,5 +44,15 @@ class BalanceModel
         $query->execute();
     }
 
+    // EN CONDITONS RÉÉLLES, CETTE MÉTHODE SERAIT APPELÉÉ CHAQUE PREMIER DU MOIS (CRON JOB)
+    public function unsetBalance($idUser): void
+    {
+        $queryTransaction = $this->connectDb()->prepare('DELETE FROM transaction WHERE user_id = :user_id;');
+        $queryTransaction->bindValue(':user_id', $idUser);
+        $queryTransaction->execute();
 
+        $queryBalance = $this->connectDb()->prepare('DELETE FROM balance WHERE user_id = :user_id;');
+        $queryBalance->bindValue(':user_id', $idUser);
+        $queryBalance->execute();
+    }
 }

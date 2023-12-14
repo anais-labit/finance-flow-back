@@ -38,7 +38,7 @@ class TransactionController
         if (empty($newTransactionName)) {
             echo json_encode([
                 "success" => false,
-                "message" => "La transaction doit porter un nom."
+                "message" => "La transaction doit porter un nom"
             ]);
         } elseif ($amount == 0) {
             echo json_encode([

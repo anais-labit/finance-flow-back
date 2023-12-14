@@ -23,7 +23,7 @@ if (isset($_POST['submitBalanceForm'])) {
     $userId = $_POST['user_id'];
     $budget = $_POST['amount'];
     $balance = new BalanceController();
-    $balance->intitiateBudget($userId, $budget);
+    $balance->setBudget($userId, $budget);
     die();
 }
 

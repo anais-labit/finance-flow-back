@@ -7,11 +7,11 @@ use App\Models\BalanceModel;
 class BalanceController
 {
 
-    function intitiateBudget(int $idUser, int $budget) {
+    function setBudget(int $idUser, int $budget)
+    {
         $balanceModel = new BalanceModel();
         $balance = $balanceModel->setBalance($idUser, $budget);
         echo json_encode($balance);
-      
     }
 
     function displayUserBalance(int $idUser)
@@ -20,5 +20,11 @@ class BalanceController
         $result = $transactionModel->getUserBalance($idUser);
         echo json_encode($result);
     }
-   
+
+    // EN CONDITONS RÉÉLLES, CETTE MÉTHODE SERAIT APPELÉÉ CHAQUE PREMIER DU MOIS (CRON JOB)
+    function unsetBudget($idUser): void
+    {
+        $balanceModel = new BalanceModel();
+        $balanceModel->unsetBalance($idUser);
+    }
 }
